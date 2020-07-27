@@ -1,6 +1,6 @@
 //client stuff  
-var myUserId = "@save_afk:matrix.org";
-var myAccessToken = "MDAxOGxvY2F0aW9uIG1hdHJpeC5vcmcKMDAxM2lkZW50aWZpZXIga2V5CjAwMTBjaWQgZ2VuID0gMQowMDI3Y2lkIHVzZXJfaWQgPSBAc2F2ZV9hZms6bWF0cml4Lm9yZwowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IElqU2NZUn5fTUR1K0hIZDAKMDAyZnNpZ25hdHVyZSD2nCs8gU1UjVlIRiHHvHimXpPHE9QUG3q-KvR3JcRp9wo";
+var myUserId = "@YOUR USERNAME:YOUR USERNAME DOMAIN (ex. matrix.org)";
+var myAccessToken = "YOUR ACCESS TOKEN";
 var sdk = require("matrix-js-sdk");
 const { domain } = require("process");
 
