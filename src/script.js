@@ -86,8 +86,6 @@ function RoomCreate() {
     }
   }
 
- 
-//curl -XPOST -d '{"user_id":"@myfriend:localhost"}' "https://localhost:8448/_matrix/client/r0/rooms/%21asfLdzLnOdGRkdPZWu:localhost/invite?access_token=YOUR_ACCESS_TOKEN"
 exports.RoomCreate =  RoomCreate;
 exports.matrixClient = matrixClient;
 exports.getRoomList = getRoomList;
