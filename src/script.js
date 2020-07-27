@@ -1,7 +1,7 @@
 
 //client stuff  
-var myUserId = "@heyman_71:matrix.org";
-var myAccessToken = "MDAxOGxvY2F0aW9uIG1hdHJpeC5vcmcKMDAxM2lkZW50aWZpZXIga2V5CjAwMTBjaWQgZ2VuID0gMQowMDI4Y2lkIHVzZXJfaWQgPSBAaGV5bWFuXzcxOm1hdHJpeC5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSByPU9qV094KzlaSStHczdtCjAwMmZzaWduYXR1cmUgyQq2yihJozG4MeQBKDmWgdvTBtRpVRVcVPV2hPAcqTIK";
+var myUserId = "@YOUR USERNAME:";
+var myAccessToken = "YOUR MATRIX ACCOUNT TOKEN HERE";
 var sdk = require("matrix-js-sdk");
 const { domain } = require("process");
 
