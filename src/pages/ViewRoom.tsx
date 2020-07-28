@@ -1,30 +1,9 @@
 import React, { useState } from 'react';
-import {
-  IonBackButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonList,
-  IonPage,
-  IonToolbar,
-  IonItem,
-  IonInput,
-  IonFab,
-  IonFabList,
-  IonFabButton,
-  IonIcon,
-  useIonViewWillEnter,
-  useIonViewDidEnter,
-  IonRefresher,
-  IonRefresherContent
-} from '@ionic/react';
-import { RouteComponentProps } from 'react-router';
+import {IonBackButton,IonButtons,IonContent,IonHeader,IonList,IonPage,IonToolbar,IonItem,IonInput,IonFab,IonFabButton,IonIcon,useIonViewWillEnter} from '@ionic/react';
 import MessageListItem from '../components/MessageListItem';
 import './ViewRoom.css';
-
-import { add, settings, share, person, arrowForwardCircle, arrowBackCircle, caretForwardOutline} from 'ionicons/icons';
-
 import *  as re from '../script.js';
+import { chevronForwardOutline } from 'ionicons/icons';
 
 const ViewMessage: React.FC<any> = ({ match }) => 
 {
@@ -34,28 +13,30 @@ const ViewMessage: React.FC<any> = ({ match }) =>
   
   re.matrixClient.on("Room.timeline", function(event, room, toStartOfTimeline)
   {
-    // we know we only want to respond to messages
-    if (event.getType() !== "m.room.message")
+    if (event.getType() === "m.room.message" && event.getRoomId() === roomID) // condizioni messaggio
     {
-        return;
-    }
-
-    // we are only intested in messages from the test room, which start with "a"
-    if (event.getRoomId() === roomID)// condizioni messaggio
-    {
-      setMessages(messages.concat([event]));
+      setMessages([...messages, event]);
     }
   });
 
-  useIonViewWillEnter(() => {
-    Object.keys(re.matrixClient.store.rooms).forEach((roomId) => {
+  // View in...
+  useIonViewWillEnter(() => 
+  {
+    Object.keys(re.matrixClient.store.rooms).forEach((roomId) =>
+    {
       if (roomId === roomID)
       {
         setMessages(re.matrixClient.getRoom(roomId).timeline);
-      } 
+      }
     });
   });
 
+  const sendMessageAction = () => 
+  {
+    // event.preventDefault(); // evita refresh?
+    re.sendMessage(text, match.params.id);
+    setText('');
+  }
 
   return (
     <IonPage id="view-message-page">
@@ -70,26 +51,27 @@ const ViewMessage: React.FC<any> = ({ match }) =>
       <IonContent fullscreen>
          {messages ?
         (
-          <>
+        <>
         <IonList>
             {
-              messages.map(m => <MessageListItem message = {m}/>)          
+              messages.map(m => <MessageListItem key = {m.event.event_id} message = {m}/>)          
             }
         </IonList>
             
         <IonItem>
           <IonInput value={text} placeholder="Type message" onIonChange = {e => setText(e.detail.value!)}></IonInput>
-            <IonFab vertical="center" horizontal="end" onClick={() => re.sendMessage(text,match.params.id)}>
+            <IonFab vertical = "center" horizontal = "end" onClick = {sendMessageAction}>
               <IonFabButton size="small" color="light" >
-                <IonIcon icon={caretForwardOutline} />
+                <IonIcon icon={ chevronForwardOutline } />
               </IonFabButton>
             </IonFab>
         </IonItem>
-          </>
+        
+        </>
         ) : <div>Message not found</div>}
       </IonContent>
     </IonPage>
   );
 };
 
-export default ViewMessage;
+export default ViewMessage; 
