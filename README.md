@@ -10,4 +10,4 @@ Distributed chat prototype using Ionic-React based on Matrix.org protocol
 For the missing directories in this Ionic project (like resources, node_modules, public) just generate an [Ionic basic project](https://ionicframework.com/docs/react/your-first-app) using `ionic start appName --template=list --type=react`
 
 # Run
-Open a terminal inside the project folder and run `ionic serve` and open localhost in browser
+Open a terminal inside the project folder and then run `ionic serve`. Open localhost in browser after that
