@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonFooter, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonFabList, IonItem, IonText , useIonViewWillEnter} from '@ionic/react';
-import { add, settings, share, person, arrowForwardCircle, arrowBackCircle, arrowUpCircle, key } from 'ionicons/icons';
-
-import {
-  IonList,
-  IonRefresher,
-  IonRefresherContent
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonBadge, useIonViewWillEnter} from '@ionic/react';
+import { add } from 'ionicons/icons';
+import{IonList, IonRefresher, IonRefresherContent} from '@ionic/react';
 import './Home.css';
 
 import *  as re from '../script.js';
@@ -14,7 +9,6 @@ import RoomListItem from '../components/RoomListItem';
 
 const Home: React.FC = () =>
 {
-
   const [rooms, refreshRooms] = useState<any[]>([]);
 
   re.matrixClient.once('sync', function(state, prevState, res) // client sync
@@ -22,7 +16,8 @@ const Home: React.FC = () =>
     refreshRooms(re.matrixClient.getRooms());
   });
 
-  useIonViewWillEnter(() => {
+  useIonViewWillEnter(() =>
+  {
     refreshRooms(re.matrixClient.getRooms());
   });
 
@@ -37,7 +32,6 @@ const Home: React.FC = () =>
         });
     }
   });
-
 
   const refresh = (e: CustomEvent) => 
   {
@@ -68,7 +62,7 @@ const Home: React.FC = () =>
 
         <IonList>
         {
-          rooms.map(roomElement => <RoomListItem key = {roomElement.roomId} room = {roomElement}/>)          
+          rooms.map(roomElement => <RoomListItem key = {roomElement.roomId} room = {roomElement} newMessages = {1}/>)          
         }
         </IonList>
         
