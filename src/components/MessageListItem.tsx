@@ -12,23 +12,23 @@ const MessageListItem: React.FC<any> = ({ message }) =>
 {
 
   return (
-    <IonItem>
-    {message.getType() === "m.room.message" ?
+    <IonItem> 
+    { message.getType() === "m.room.message" ? // if ...
         (
-        <>
-          <div slot="start" className="dot dot-unread"></div>
+        <> 
+          <div slot="start" className="dot"></div>
             <IonLabel className="ion-text-wrap">
               <h2>
-              {message.sender.name}
+              { message.sender.name }
                 <span className="date">
                   <IonNote>{ getMessageTime(message)  }</IonNote>
                 </span>
               </h2>
-                <h3>{message.event.content.body}</h3>
+                <h3>{ message.event.content.body }</h3>
             </IonLabel>
           </>
         ) 
-        : 
+        : // else... (leave blank)
         <p></p>}
       </IonItem>
   );
