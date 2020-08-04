@@ -1,40 +1,44 @@
-#view-message-page ion-item {
+#view-room-page ion-item {
   --inner-padding-end: 0;
   --background: transparent;
 }
 
-#view-message-page ion-label {
+#view-room-page ion-label {
   margin-top: 12px;
   margin-bottom: 12px;
 }
 
-#view-message-page ion-item h2 {
+#view-room-page ion-item h2 {
   font-weight: 600;
 }
 
-#view-message-page ion-item .date {
+#view-room-page ion-item .date {
   float: right;
   align-items: center;
   display: flex;
 }
 
-#view-message-page ion-item ion-icon {
+#view-room-page ion-item ion-icon {
   font-size: 42px;
   margin-right: 8px;
 }
 
-#view-message-page ion-item ion-note {
+#view-room-page ion-item ion-note {
   font-size: 15px;
   margin-right: 12px;
   font-weight: normal;
 }
 
-#view-message-page h1 {
+#view-room-page h1 {
   margin: 0;
   font-weight: bold;
   font-size: 22px;
 }
 
-#view-message-page p {
+#view-room-page p {
   line-height: 22px;
+}
+
+#view-room-page ion-title {
+  text-align: center;
 }
