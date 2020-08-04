@@ -1,6 +1,12 @@
-//client stuff  
-var myUserId = "@YOUR USERNAME:YOUR USERNAME DOMAIN (ex. matrix.org)";
-var myAccessToken = "YOUR ACCESS TOKEN";
+// Client data
+
+// API: https://matrix.org/docs/spec/client_server/latest#login
+
+// READ USER DATA FROM JSON FILE
+var loginInfo = require('./data/login.json');
+var myUserId = loginInfo.user;
+var myAccessToken = loginInfo.accessToken;
+
 var sdk = require("matrix-js-sdk");
 const { domain } = require("process");
 
@@ -11,21 +17,21 @@ var matrixClient = sdk.createClient(
   userId: myUserId
 });
 
-// **************************
-
 matrixClient.startClient();
 
-// creare una stanza da app
+// ###############################################
+
+// FUNCTIONS
+
+// Rooms are private and accessible only on invite!
 function RoomCreate()
 {
-
-    //nome della stanza
-    var str = "Soccorso";
+    // Room name
+    var baseName = "Soccorso";
     var dom = ":matrix.org"
 
-    var timestamp = Date.now().toString();
-    var room_name = str.concat(timestamp);
-    var room_id = Date.now().toString().concat(dom);
+    var roomName = baseName + Date.now().toString();
+    var room_id = Date.now().toString() + dom;
 
     var body = "https://matrix.org/_matrix/client/r0/createRoom?access_token=" + myAccessToken;
 
@@ -33,12 +39,14 @@ function RoomCreate()
     xmlHttp.open( "POST", body, false );
     xmlHttp.send(JSON.stringify(
       {
-        "room_alias_name" : room_name,
-        "room_id" : room_id 
+        "room_alias_name" : roomName,
+        "name" : roomName,
+        "room_id" : room_id,
+        "visibility" : "private"
       }));
   }
 
-// mandare un messaggio
+
 function sendMessage(text,room)
 {
   //controllo testo vuoto
@@ -63,7 +71,9 @@ function sendMessage(text,room)
   }
 
   // Room members..
-  else if(text.startsWith('/members')){
+  else if(text.startsWith('/members'))
+  {
+    // TODO:
     return
   }
 
@@ -82,10 +92,26 @@ function sendMessage(text,room)
   }
 }
 
-// eliminare una stanza
-function deleteRoom(room)
+
+// invite someone
+function inviteUser(userId, room)
+{ 
+  var request = "https://matrix.org/_matrix/client/r0/rooms/" + room + "/invite?access_token=" + myAccessToken;
+
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "POST", request, false );   
+  xmlHttp.send(JSON.stringify(
+  {
+    "user_id" : userId,
+  }));
+
+}
+
+
+// lasciare una stanza
+function leaveRoom(roomId)
 {
-  var request = "https://matrix.org/_matrix/client/r0/rooms/" + room.roomId + "/leave";
+  var request = "https://matrix.org/_matrix/client/r0/rooms/" + roomId + "/leave?access_token=" + myAccessToken;
 
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "POST", request, false );   
@@ -95,5 +121,6 @@ function deleteRoom(room)
 exports.RoomCreate =  RoomCreate;
 exports.matrixClient = matrixClient;
 exports.sendMessage = sendMessage;
-exports.deleteRoom = deleteRoom;
+exports.leaveRoom = leaveRoom;
+exports.inviteUser = inviteUser;
 
