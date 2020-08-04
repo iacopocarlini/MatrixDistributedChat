@@ -21,7 +21,7 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/* Theme variables */
+// Theme variables
 import './theme/variables.css';
 
 const App: React.FC = () => 
@@ -30,7 +30,7 @@ const App: React.FC = () =>
     <IonReactRouter>
       <IonRouterOutlet>
         <Route path="/home" component = {Home} exact={true} />
-        <Route path="/room/:id" component = {ViewRoom} exact={true}/>
+        <Route path="/room/:id/:name" component = {ViewRoom} exact={true}/>
         <Route exact path="/" render={() => <Redirect to="/home" />} />
       </IonRouterOutlet>
     </IonReactRouter>
@@ -38,3 +38,15 @@ const App: React.FC = () =>
 );
 
 export default App;
+
+/* ROUTING CONDIZIONALE
+<Route
+  exact
+  path="/dashboard"
+  render={props => {
+    return isAuthed ? <DashboardPage {...props} /> : <LoginPage />;
+  }}
+/>
+
+<Route path="/room/:id" component = {ViewRoom} exact={true}/> FUNZIONAVA
+*/
