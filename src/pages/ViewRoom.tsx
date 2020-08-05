@@ -2,15 +2,23 @@ import React, { useState, useEffect } from 'react';
 import {IonBackButton, IonButtons, IonButton, IonContent, IonSelect, IonSelectOption, IonHeader, IonTitle, IonList, IonPage, IonToolbar, IonItem, IonInput, IonFab, IonFabButton, IonIcon, useIonViewDidEnter, useIonViewWillEnter} from '@ionic/react';
 import MessageListItem from '../components/MessageListItem';
 import './ViewRoom.css';
-import *  as re from '../script.js';
+import *  as re from '../client.js';
 import { chevronForwardOutline } from 'ionicons/icons';
-import { getFriends, Friend } from '../data/friend';
+import { getFriends, Friend } from '../data/friend'; // ts file hosting the friends list
 
+
+// #########################################################################################
+
+/* VIEW 
+   IN: the room ID coming from the item clicked in the room list 
+   OUT: the room view with utilities and live chat */
 const ViewRoom: React.FC<any> = ({ match }) => 
 {
+  // CONSTANT
   const roomID = match.params.id;
 
-  // Hooks
+
+  // HOOKS
   const [messages, setMessages] = useState<any[]>([]); // array di events
   const [text, setText] = useState<string>();
   const [inviteList, setInviteList] = useState<Friend[]>([]);
@@ -18,26 +26,27 @@ const ViewRoom: React.FC<any> = ({ match }) =>
   const [loadingFriends, setLoadingFriends] = useState(true);
   
 
-  // Room event listener
+  // VIEW INTERNAL FUNCTIONS AND LISTENERS
+
+  // Room event listener - the client is listening for new messages
   re.matrixClient.on("Room.timeline", function(event, room, toStartOfTimeline)
   {
-    if (event.getType() === "m.room.message" && event.getRoomId() === roomID) // condizioni messaggio
-      setMessages([...messages, event]);
-
+    if (event.getType() === "m.room.message" && event.getRoomId() === roomID) // there is a new message for this room
+      setMessages([...messages, event]); // update the message list
   });
 
 
-  // View in...
+  // Arriving in the view from another page...
   useIonViewWillEnter(() =>
   {
-    // Chat is read...
+    // Chat is read -> remove notifications...
     if (re.matrixClient.getRoom(roomID) !== null)
     {
       re.matrixClient.getRoom(roomID).setUnreadNotificationCount("total", 0);
       re.matrixClient.getRoom(roomID).setUnreadNotificationCount("highlight", 0);
     }
 
-    // Retrieve messages...
+    // Retrieve old messages...
     Object.keys(re.matrixClient.store.rooms).forEach((roomId) =>
     {
       if (roomId === roomID)
@@ -46,10 +55,11 @@ const ViewRoom: React.FC<any> = ({ match }) =>
   });
 
   
-  // Update friends list
+  // Update friends list when coming into the room
+  // Friends list is hosted into /data/friend.ts file
   useEffect(() =>
   {
-    if (loadingFriends)
+    if (loadingFriends && re.matrixClient.getRoom(roomID) !== null)
     {
       // Retrieve friends list
       var members = re.matrixClient.getRoom(roomID).getJoinedMembers();
@@ -58,7 +68,7 @@ const ViewRoom: React.FC<any> = ({ match }) =>
       friends.forEach(f => {
         var alreadyIN = false;
         members.forEach(m => {
-          if (f.id === m.name)
+          if (f.id === m.userId)
             alreadyIN = true;
         });
         if (!alreadyIN)
@@ -71,15 +81,20 @@ const ViewRoom: React.FC<any> = ({ match }) =>
   });
   
 
+  // BUTTON ACTIONS 
+
+  // Action linked to the send button (>)
   const sendMessageAction = () => 
   {
     re.sendMessage(text, match.params.id);
     setText('');
   }
 
+
+  // Action linked to the invite button (INVITE)
   const inviteUserAction = () => 
   {
-    if (userToInvite !== null && userToInvite !== "")
+    if (userToInvite !== null && userToInvite !== "") // username check
     {
       re.inviteUser(userToInvite, roomID);
       setUserToInvite('');
@@ -88,6 +103,7 @@ const ViewRoom: React.FC<any> = ({ match }) =>
       return;
   }
 
+  // View rendering
   return (
     <IonPage id="view-room-page">
       <IonHeader translucent>
@@ -97,7 +113,7 @@ const ViewRoom: React.FC<any> = ({ match }) =>
             <IonBackButton text="Rooms" defaultHref="/home"></IonBackButton>
           </IonButtons>
 
-          <IonButton slot="end" onClick = {inviteUserAction}>Invite</IonButton>
+          <IonButton slot="end" onClick = {inviteUserAction}> Invite </IonButton>
             <IonSelect slot="end" value={userToInvite} okText="Okay" cancelText="Cancel" onIonChange={e => setUserToInvite(e.detail.value)}>
             {
               inviteList.map(friend => <IonSelectOption key = {friend.id} value = {friend.id}> {friend.id} </IonSelectOption>)
@@ -133,10 +149,9 @@ const ViewRoom: React.FC<any> = ({ match }) =>
         </IonItem>
         
         </>
-        ) : <div>Couldn't retrieve chat</div>}
+        ) : <div> Couldn't retrieve chat </div>}
       </IonContent>
     </IonPage>
   );
 };
-
 export default ViewRoom;

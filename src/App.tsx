@@ -38,15 +38,3 @@ const App: React.FC = () =>
 );
 
 export default App;
-
-/* ROUTING CONDIZIONALE
-<Route
-  exact
-  path="/dashboard"
-  render={props => {
-    return isAuthed ? <DashboardPage {...props} /> : <LoginPage />;
-  }}
-/>
-
-<Route path="/room/:id" component = {ViewRoom} exact={true}/> FUNZIONAVA
-*/

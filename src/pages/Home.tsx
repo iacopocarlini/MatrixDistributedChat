@@ -3,39 +3,41 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabBut
 import { add } from 'ionicons/icons';
 import{IonList, IonRefresher, IonRefresherContent} from '@ionic/react';
 import './Home.css';
-import *  as re from '../script.js';
+import *  as re from '../client.js';
 import RoomListItem from '../components/RoomListItem';
 
+
+// #########################################################################################
+
+
+// VIEW
 const Home: React.FC = () =>
 {
-  // State variables / Hooks
-  const [rooms, refreshRooms] = useState<any[]>([]);
+  // STATE VARIBALES / HOOKS
+  const [rooms, setRooms] = useState<any[]>([]);
   const [notifications, setNotifications] = useState({});
+
+
+  // VIEW INTERNAL FUNCTIONS AND LISTENERS
 
   // Client sync with server
   re.matrixClient.once('sync', function(state, prevState, res)
   {
-    /* Managing state
+    /* Manage state if needed
     if(state === 'PREPARED')
-    {
-      console.log("prepared");
-      refreshRooms(re.matrixClient.getRooms());
-    } 
-    else {
+      // add prepare state code here
+    else
         console.log(state);
-        //process.exit(1);
-    }
     */
     
-    refreshRooms(re.matrixClient.getRooms());
+    setRooms(re.matrixClient.getRooms());
   });
-  
   const userID = re.matrixClient.getUserId();
 
-  // View in...
+
+  // Arriving in the view from another page...
   useIonViewWillEnter(() =>
   {
-    
     // Notifications check
     re.matrixClient.getRooms().forEach((room) =>
     {
@@ -46,21 +48,21 @@ const Home: React.FC = () =>
     });
     setNotifications(notifications);
 
-
-    // Rooms
-    refreshRooms(re.matrixClient.getRooms()); // restoring rooms state
+    // refresh room list
+    setRooms(re.matrixClient.getRooms());
   });
 
-  // # CLIENT LOGIC
+  // Client functions for the view
 
-  // ## MEMBERSHIP LOGIC : Automatically join rooms when invited
+  // MEMBERSHIP LOGIC : Automatically join rooms when invited
   re.matrixClient.on("RoomMember.membership", function(event, member) 
   {
     if (member.membership === "invite" && member.userId === userID)
       re.matrixClient.joinRoom(member.roomId);
   });
 
-  // ## Room events listener
+
+  // Room event listener - the client is listening for new messages and controls notifications
   re.matrixClient.on("Room.timeline", function(event, room, toStartOfTimeline)
   {
     if (event.getType() === "m.room.message") // triggered for any message from any room...
@@ -78,6 +80,7 @@ const Home: React.FC = () =>
   });
   
 
+  // view refresh
   const refresh = (e: CustomEvent) => 
   {
     setTimeout(() => {
@@ -85,6 +88,7 @@ const Home: React.FC = () =>
     }, 1000);
   };
 
+  // View rendering
   return (
 
     <IonPage id="home-page">
@@ -106,7 +110,7 @@ const Home: React.FC = () =>
         }
         </IonList>
         
-        <IonFab id= "add-button" vertical="bottom" horizontal="end" slot="fixed" onClick={re.RoomCreate}>
+        <IonFab id= "add-button" vertical="bottom" horizontal="end" slot="fixed" onClick={re.createRoom}>
           <IonFabButton>
             <IonIcon icon={add}/>
           </IonFabButton>
@@ -116,6 +120,4 @@ const Home: React.FC = () =>
 
   );
 };
-
-  
 export default Home;

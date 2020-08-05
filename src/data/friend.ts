@@ -7,10 +7,10 @@ const friends: Friend[] = [
     id: "@save_afk:matrix.org"
   },
   {
-    id: "@mimmo_cordero:matrix.org"
+    id: "@otacon:matrix.org"
   },
   {
-    id: "@patricia:matrix.org"
+    id: "@naomi_hunter:matrix.org"
   },
   {
     id: "@kevin:matrix.org"

@@ -1,0 +1,9 @@
+/* RESOURCE - CONDITIONAL ROUTING in typescript React
+<Route
+  exact
+  path="/dashboard"
+  render={props => {
+    return isAuthed ? <DashboardPage {...props} /> : <LoginPage />;
+  }}
+/>
+*/
