@@ -18,3 +18,9 @@ In order to have the chat working, you must be logged to the Matrix server and p
 # Run
 Open a terminal inside the project folder and then run `ionic serve`. Open localhost:YOUR_SERVING_PORT/home in browser after that (e.g.: localhost:8100/home).
 The serving port is displayed in terminal after running `ionic serve`.
+
+# Features
+&#x2611; create private rooms to chat with other people in privacy  
+&#x2611; send messages into private rooms  
+&#x2611; invite friends from the friends list contained into the friend.ts file (/src/data/friend.ts) that you can edit for your own whitelist, or send a message "/invite userToInvite"  
+&#x2611; automatically join rooms when you are invited
