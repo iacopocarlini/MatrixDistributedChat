@@ -10,7 +10,7 @@ Distributed chat prototype using Ionic-React based on [Matrix.org](https://matri
 Ensure you have the latest LTS version of Node.js and yarn installed (for yarn run in terminal: `npm install -g yarn`).
 To install Matrix.org JS SDK for the project, **using yarn instead of npm is recommended:** `yarn add matrix-js-sdk`. 
 
-For the missing directories in this Ionic project (like resources, node_modules, public) just generate an [Ionic basic project](https://ionicframework.com/docs/react/your-first-app) using `ionic start appName --template=list --type=react`. Then replace the **src** folder with the one provided in this repository.
+For the missing directories in this Ionic project (like resources, node_modules, public) just generate an [Ionic basic project](https://ionicframework.com/docs/react/your-first-app) using `ionic start appName --template=list --type=react` (this command could take a while to get executed). Then replace the **src** folder with the one provided in this repository.
 
 # Authentication
 In order to have the chat working, you must be logged to the Matrix server and put your user ID and token into the login file (/src/data/login.json). Register [here](https://element.io/get-started). Token can be retrieved into the General Settings page of your account.
