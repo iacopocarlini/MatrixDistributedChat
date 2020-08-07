@@ -1,4 +1,4 @@
-# MatrixDistributedChat
+# Matrix Distributed Chat
 Distributed chat prototype using Ionic-React based on [Matrix.org](https://matrix.org) protocol
 
 # Requirements
