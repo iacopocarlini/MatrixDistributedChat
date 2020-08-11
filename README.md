@@ -4,7 +4,7 @@ Distributed chat prototype using Ionic-React based on [Matrix.org](https://matri
 # Preview
 <img src="screenshots/preview1.jpeg" alt="Home screenshot" width="200"/>
 <figcaption> Android view of home page </figcaption>
-
+<br><br>
 <img src="screenshots/preview2.jpeg" alt="Group chat screenshot" width="200"/>
 <figcaption> Android view of a specific chat </figcaption>
 
