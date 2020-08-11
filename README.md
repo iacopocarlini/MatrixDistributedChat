@@ -26,4 +26,4 @@ The serving port is displayed in terminal after running `ionic serve`.
 &#x2611; automatically join rooms when you are invited
 
 # Deployment
-If you are up to apply your personal changes to the app and then deploy it  (Web, Android, iOS), check this [Capacitor guide](https://capacitorjs.com/docs/getting-started/with-ionic)
+If you are up to apply your personal changes to the app and then deploy it  (Web, Android, iOS), check this [Capacitor guide](https://capacitorjs.com/docs/getting-started/with-ionic).
