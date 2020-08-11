@@ -1,6 +1,14 @@
 # Matrix Distributed Chat
 Distributed chat prototype using Ionic-React based on [Matrix.org](https://matrix.org) protocol
 
+# Preview
+Android view of chat home page
+<img src="screenshots/preview1.jpeg" alt="Home screenshot" width="200"/>
+![Home screenshot](screenshots/preview1.jpeg)  
+
+Android view of a particular chat
+<img src="screenshots/preview2.jpeg" alt="Group chat screenshot" width="200"/>
+
 # Requirements
 + [Node.js](https://nodejs.org/it/download/)
 + [Ionic](https://ionicframework.com/docs/intro/cli)
