@@ -13,7 +13,10 @@ import './MessageListItem.css';
 function getMessageTime(message)
 {
   var d = new Date(message.event.origin_server_ts);
-  return d.getHours().toString() + ':' + d.getMinutes().toString() + ' (' + d.getDate().toString() + '/' + (d.getMonth()+1).toString() + ')'; 
+  return d.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) 
+         + ':' + d.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+         + ' (' + d.getDate().toString() + '/' 
+         + (d.getMonth()+1).toString() + ')';
 }
 
 
